@@ -15,7 +15,7 @@ mocha tests/17_largest_number_test.js
 */
 
 function largestNumber (a, b) {
-  // Your code here
+  return Math.max(a, b);// Your code here
   // Google JS syntax ;)
 }
 
