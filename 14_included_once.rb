@@ -19,5 +19,6 @@
 #
 
 def includedOnce (haystack, needle)
-  # Your code here
+  haystack = []
+  haystack.push(haystack)
 end

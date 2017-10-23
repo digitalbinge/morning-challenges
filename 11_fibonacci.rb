@@ -23,6 +23,6 @@
 # ruby tests/11_fibonacci_test.rb
 #
 
-def nthFibonacci (n)
-  # Your code here    
+def nthFibonacci(n)
+   n == 0 || n == 1 ? n : nthFibonacci(n-2) + nthFibonacci(n-1)
 end

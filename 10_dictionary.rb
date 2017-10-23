@@ -21,5 +21,25 @@
 #
 
 class Dictionary
-  # Your code here
+	def initialize
+		@dictionary = {}
+	end
+
+  def add_word(word, definition)
+  	@dictionary[word] = definition
+  end
+
+  def lookup(word)
+  	@dictionary[word]
+  end
+
+  def total_words
+  	@dictionary.length
+  end
 end
+
+dictionary = Dictionary.new
+dictionary.add_word('ruby', 'A precious stone')
+dictionary.total_words
+dictionary.lookup('ruby')
+

@@ -31,6 +31,13 @@
 #
 
 def firstNonRepeat (string)
-  # Your code here
-  # Whiteboard first!
+  non_repeat = string.each_char.detect{ |first| string.count(first) == 1 }
+  puts non_repeat ? non_repeat : false
 end
+
+firstNonRepeat('aaaabbbcccdeeefgh')
+firstNonRepeat('wwwhhhggge')
+firstNonRepeat('awwwhhhggge')
+firstNonRepeat('wwwhhhggg') 
+
+

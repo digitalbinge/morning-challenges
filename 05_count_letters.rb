@@ -15,9 +15,12 @@
 #
 
 def count_letters (string)
-  result = {} # You'll need an empty hash to get started!
-  
-  # Your code here
-
-  result # return the hash
+string = 
+    string.delete(' ')
+     .split('')
+     .group_by{ |c| c }
+     .map{ |k, v| [k, v.size] }
+     .sort_by{ |k, v| [-v, k] }
 end
+
+print count_letters("hello")
