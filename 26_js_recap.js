@@ -7,7 +7,7 @@
 // 1. Line 12 logs whatever greet() returns.
 // Right now it's logging undefined. Fix me!
 function greet () {
-  'hello!';
+  return 'hello!';
 }
 console.log(greet());
 
@@ -19,9 +19,11 @@ function fullName (first, last) {
   console.log(first + ' ' + last);
 }
 // 1. Call the function so it puts your full name onto the screen.
-
+fullName('Dave', 'Barr')
 // 2. Use modern syntax, turn fullName into an es6 arrow function.
+const fllName = (first, last) => { console.log(first + ' ' + last) }
 
+fllName('Mark', 'Johnson')
 // 3. Add a middle name. Update #1 to work.
 
 // 4. Use interpolation instead of concatination.
