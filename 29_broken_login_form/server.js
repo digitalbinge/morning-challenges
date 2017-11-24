@@ -25,7 +25,23 @@
 
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+const users = {
+  'test@test.com': {
+    password: 'dog',
+    count: 0
+  },
+  'test1@test.com': {
+    password: 'dog1',
+    count: 0
+  },
+  'test2@test.com': {
+    password: 'dog2',
+    count: 0
+  }
+}
 
+app.use(bodyParser.urlencoded({extended: true}));
 // Allow access to everything in /public.
 // This is for our stylesheets & images.
 app.use(express.static('public'));
@@ -38,7 +54,26 @@ app.get("/", (req, res) => {
 });
 
 app.post("/secure", (req, res) => {
-  res.render('secure');
+  let email = req.body.email;
+  let password = req.body.password;
+  let agree = req.body.agree;
+  let authenticated = false;
+
+  if (users[email] && users[email].password === password && agree === 'on') {
+    authenticated = true;
+  }
+
+  if (authenticated) {
+    users[email].count = 0;
+    res.render('secure');
+  } else {
+    if (users[email]) {
+      users[email].count++
+      res.status(401).send(`Error, you have reached ${users[email].count} attempts.`)
+    } else {
+      res.send(401)
+    }
+  }
 });
 
 app.listen(3000);
