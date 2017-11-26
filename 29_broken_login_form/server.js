@@ -25,6 +25,7 @@
 
 const express = require('express');
 const app = express();
+const session = require('express-session');
 
 // Allow access to everything in /public.
 // This is for our stylesheets & images.
