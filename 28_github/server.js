@@ -49,6 +49,24 @@ app.get("/github/:username", (req, res) => {
        });
 });
 
+app.get("/github/:username/repos", (req, res) => {
+  // We can get the username from the URL using req.params
+  let username = req.params.username;
+
+  // Hit GitHub's API to get information about a user
+  axios.get(`https://api.github.com/users/${username}/repos`)
+       .then((response) => {
+         // Everything worked. Response.data has all the GitHub info
+         // Render our github.pug file and hand it all the info
+         // console.log(response.data);
+         res.render('githubrepo', {githubDetails: response.data});
+       }).catch(function (error) {
+         // Something went wrong
+         console.log(error);
+         res.send('Whoops! Something went wrong.');
+       });
+});
+
 // Listen for connections (turn the server on)
 app.listen(port);
 console.log("Listening on port " + port);

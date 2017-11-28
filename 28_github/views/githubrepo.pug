@@ -1,0 +1,9 @@
+html
+	head
+		title Pretty GitHub
+			body
+				h1 Repo Deets
+				each repo in githubDetails
+					li= repo
+					//- p #{githubDetails.login} location: #{githubDetails.location}
+					//- p Bio: #{githubDetails.bio}

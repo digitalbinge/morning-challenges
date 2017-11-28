@@ -23,9 +23,26 @@
   
 */
 
+// Sessions
+//
+// Carry on from challenge #29 (broken login form)
+//
+// Challenge:
+// 1. Implement https://github.com/expressjs/session
+// 2. When a use logs in, store their email in the session.
+//    Hint: use req.session - this is unique to each user.
+//    Hint: e.g. req.session.email = 'user@blah.ccom'
+//  
+// 3. Allow the user to GET /secure if they are logged in.
+//
+// Beast mode:
+// 1. Add a logout link which destroys their session.
+
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const users = {
   'test@test.com': {
     password: 'dog',
@@ -46,12 +63,28 @@ app.use(bodyParser.urlencoded({extended: true}));
 // This is for our stylesheets & images.
 app.use(express.static('public'));
 
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  cookie: {}
+}))
+
 // Views #thepuglifechoseme
 app.set('view engine', 'pug')
 
 app.get("/", (req, res) => {
-  res.render('login');
+  if (req.session.email) {
+    res.render('secure');
+  } else {
+    res.render('login');
+  }
 });
+
+app.post("/logout", (req, res) => {
+  req.session.destroy(function(err) {
+    res.render('login');// cannot access session here
+  })
+})
 
 app.post("/secure", (req, res) => {
   let email = req.body.email;
@@ -65,6 +98,8 @@ app.post("/secure", (req, res) => {
 
   if (authenticated) {
     users[email].count = 0;
+    req.session.email = email;
+    console.log(req.session);
     res.render('secure');
   } else {
     if (users[email]) {
