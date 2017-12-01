@@ -14,20 +14,39 @@
 */
 
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Button from './components/Button'
+
+let currentId = 0
+const genId = () => ++currentId
 
 class App extends Component {
+  
+  state = {
+    buttons: [],
+    totalClicks: 0
+  }
+
+  addButton = () => {
+    this.setState(prevState => ({
+      buttons: [...prevState.buttons, genId()]
+    }))
+  }
+
+  countAllClicks = () => {
+    this.setState(prevState => ({
+      totalClicks: prevState.totalClicks + 1
+    }))
+  }
+
   render() {
     return (
       <div className="App">
-        <button>I have been clicked 0 times</button>
-        <button>I have been clicked 0 times</button>
-        <button>I have been clicked 0 times</button>
-        <button>I have been clicked 0 times</button>
-        <button>I have been clicked 0 times</button>
-        <button>I have been clicked 0 times</button>
-        <button>I have been clicked 0 times</button>
+        <p>Total clicks: {this.state.totalClicks}</p>
+        <button onClick={this.addButton}>Add another button</button>
+        {
+          this.state.buttons.map(id => <Button key={id} parentTotalClicks={this.countAllClicks} />)
+        }
       </div>
     );
   }
